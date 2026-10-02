@@ -75,6 +75,7 @@ async def root():
         "dump_channel": config.DUMP_CHANNEL,
         "total_cached_items": total_cached,
         "userbot_active": tg_manager.is_userbot_available(),
+        "bot_active": tg_manager.is_bot_available(),
         "docs_url": "/docs"
     }
 
