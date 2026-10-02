@@ -47,8 +47,12 @@ class TelegramManager:
                 )
                 await self.userbot.start()
                 self.is_userbot_ready = True
-                me = await self.userbot.get_me()
-                logger.info(f"TelegramManager: Assistant Userbot connected as @{me.username or me.id}")
+                try:
+                    me = await self.userbot.get_me()
+                    username = getattr(me, "username", None) or getattr(me, "id", "User")
+                    logger.info(f"TelegramManager: Assistant Userbot connected as @{username}")
+                except Exception as ex:
+                    logger.info(f"TelegramManager: Assistant Userbot connected (metadata bypassed: {ex})")
             except Exception as e:
                 logger.warning(f"TelegramManager: Failed to start Assistant Userbot: {e}")
                 self.is_userbot_ready = False

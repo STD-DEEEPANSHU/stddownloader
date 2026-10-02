@@ -50,7 +50,12 @@ class Config:
     MEOW_API_KEY = os.getenv("MEOW_API_KEY", "yuki_feabaea9d68d372ee341424466c8d0ef").strip()
 
     # Database Configuration (MongoDB or Local SQLite fallback)
-    MONGO_URI = os.getenv("MONGO_URI", "").strip()
+    MONGO_URI = (
+        os.getenv("MONGO_URI") 
+        or os.getenv("MONGO_URL") 
+        or os.getenv("MONGODB_URI") 
+        or ""
+    ).strip()
     DB_NAME = os.getenv("DB_NAME", "stddownloader").strip()
 
     # Limits & Timeouts
