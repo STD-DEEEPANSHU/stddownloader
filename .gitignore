@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+*.session
+*.session-journal
+.env
+downloads/*
+!downloads/.gitkeep
+.vercel
+.vscode/
