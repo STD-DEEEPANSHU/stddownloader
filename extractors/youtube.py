@@ -84,6 +84,15 @@ class YouTubeEngine:
                 async with aiohttp.ClientSession(timeout=timeout) as session:
                     async with session.get(stream_url) as resp:
                         if resp.status == 200:
+                            content_type = resp.headers.get("Content-Type", "").lower()
+                            # If video is requested, ensure response is actually a video stream (not audio/webm or audio/opus)
+                            if mode == "video" and "video" not in content_type:
+                                logger.warning(
+                                    f"YouTubeEngine: Meow API returned audio stream '{content_type}' instead of video for {video_id}. "
+                                    f"Skipping to yt-dlp backup for full HD video track."
+                                )
+                                continue
+
                             with open(output_path, "wb") as f:
                                 async for chunk in resp.content.iter_chunked(131072):
                                     f.write(chunk)
